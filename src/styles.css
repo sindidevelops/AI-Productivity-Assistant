@@ -95,6 +95,8 @@
   --gradient-surface: linear-gradient(160deg, oklch(1 0 0), oklch(0.97 0.015 275));
   --shadow-soft: 0 1px 2px oklch(0.21 0.045 265 / 6%), 0 8px 24px -12px oklch(0.21 0.045 265 / 18%);
   --shadow-lift: 0 18px 45px -22px oklch(0.3 0.12 275 / 45%);
+  --glass-surface: oklch(1 0 0 / 78%);
+  --glass-border: oklch(1 0 0 / 72%);
 }
 
 .dark {
@@ -133,6 +135,8 @@
   --gradient-surface: linear-gradient(160deg, oklch(0.23 0.045 268), oklch(0.2 0.05 285));
   --shadow-soft: 0 1px 2px oklch(0 0 0 / 30%), 0 10px 30px -14px oklch(0 0 0 / 60%);
   --shadow-lift: 0 20px 50px -24px oklch(0 0 0 / 70%);
+  --glass-surface: oklch(0.235 0.04 265 / 76%);
+  --glass-border: oklch(1 0 0 / 10%);
 }
 
 @layer base {
@@ -164,5 +168,70 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lift);
+  }
+}
+
+@utility dashboard-glass {
+  background: var(--glass-surface);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px) saturate(135%);
+}
+
+@utility metric-card {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+  &:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--primary) 24%, var(--border));
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+@keyframes dashboard-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility dashboard-enter {
+  animation: dashboard-enter 0.42s ease-out both;
+}
+
+@utility dashboard-delay-1 {
+  animation-delay: 60ms;
+}
+
+@utility dashboard-delay-2 {
+  animation-delay: 120ms;
+}
+
+@utility dashboard-delay-3 {
+  animation-delay: 180ms;
+}
+
+@utility dashboard-delay-4 {
+  animation-delay: 240ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-enter,
+  .metric-card,
+  .lift-on-hover {
+    animation: none;
+    transition: none;
+  }
+
+  .dashboard-enter:hover,
+  .metric-card:hover,
+  .lift-on-hover:hover {
+    transform: none;
   }
 }

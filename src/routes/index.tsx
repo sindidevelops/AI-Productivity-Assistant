@@ -87,10 +87,10 @@ function Dashboard() {
   }, [ready]);
 
   const stats = [
-    { label: "Tasks due today", value: dueToday.length, icon: ListTodo, tone: "text-primary" },
-    { label: "High priority", value: highPriority.length, icon: Flame, tone: "text-destructive" },
-    { label: "Upcoming deadlines", value: upcoming.length, icon: AlarmClock, tone: "text-warning" },
-    { label: "Meetings this week", value: 4, icon: Users, tone: "text-success" },
+    { label: "Tasks due today", value: dueToday.length, icon: ListTodo, tone: "text-primary", iconBg: "bg-primary/10" },
+    { label: "High priority", value: highPriority.length, icon: Flame, tone: "text-destructive", iconBg: "bg-destructive/10" },
+    { label: "Upcoming deadlines", value: upcoming.length, icon: AlarmClock, tone: "text-warning", iconBg: "bg-warning/15" },
+    { label: "Meetings this week", value: 4, icon: Users, tone: "text-success", iconBg: "bg-success/10" },
   ];
 
   const quickActions = [
@@ -103,11 +103,14 @@ function Dashboard() {
 
   return (
     <AppShell title="Dashboard" description="Your workplace at a glance">
-      <div className="space-y-6">
-        <Card className="surface-card overflow-hidden border-primary/20">
-          <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="space-y-7">
+        <Card className="dashboard-enter dashboard-glass overflow-hidden border-primary/15">
+          <CardContent className="relative flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between lg:p-7">
             <div>
-              <h2 className="text-xl font-bold sm:text-2xl">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
+                <Sparkles className="h-3.5 w-3.5" /> Daily focus
+              </div>
+              <h2 className="max-w-3xl text-xl font-bold sm:text-2xl">
                 {greeting()}, {userName}! Let&apos;s make today productive.
               </h2>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
@@ -115,53 +118,63 @@ function Dashboard() {
                 {dueToday.length} due today. Clear the urgent work first, then move to planning.
               </p>
             </div>
-            <Button asChild>
+            <Button asChild className="group shrink-0 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
               <Link to="/workflow">
-                Run the meeting workflow <ArrowRight className="ml-1.5 h-4 w-4" />
+                Run the meeting workflow <ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
             </Button>
           </CardContent>
         </Card>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="dashboard-enter dashboard-delay-1 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map((s) => (
-            <Card key={s.label} className="lift-on-hover">
+            <Card key={s.label} className="metric-card group rounded-lg border-border/70 shadow-sm">
               <CardContent className="flex items-center justify-between p-5">
                 <div>
-                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{s.label}</p>
-                  <p className="mt-1 text-3xl font-bold">{s.value}</p>
+                  <p className="text-xs font-semibold uppercase text-muted-foreground">{s.label}</p>
+                  <p className="mt-2 text-3xl font-bold tabular-nums">{s.value}</p>
                 </div>
-                <s.icon className={`h-8 w-8 ${s.tone}`} />
+                <div className={`flex h-11 w-11 items-center justify-center rounded-lg ${s.iconBg} transition-transform duration-200 group-hover:scale-105`}>
+                  <s.icon className={`h-5 w-5 ${s.tone}`} />
+                </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <div>
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            Quick actions
-          </h3>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <section className="dashboard-enter dashboard-delay-2">
+          <div className="mb-3 flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-semibold">Quick actions</h3>
+              <p className="mt-0.5 text-xs text-muted-foreground">Jump into your most-used tools</p>
+            </div>
+          </div>
+          <div className="grid overflow-hidden rounded-lg border bg-card/75 shadow-sm backdrop-blur-sm sm:grid-cols-2 lg:grid-cols-5">
             {quickActions.map((a) => (
               <Link
                 key={a.to}
                 to={a.to}
-                className="lift-on-hover flex items-center gap-3 rounded-xl border bg-card px-4 py-3 text-sm font-medium"
+                className="group flex min-h-14 items-center gap-3 border-b px-4 py-3 text-sm font-medium transition-colors duration-200 hover:bg-accent/60 sm:border-r lg:border-b-0 last:border-b-0 lg:last:border-r-0"
               >
-                <a.icon className="h-4 w-4 text-primary" />
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
+                  <a.icon className="h-4 w-4" />
+                </span>
                 {a.label}
               </Link>
             ))}
           </div>
-        </div>
+        </section>
 
-        <Card className="border-primary/20">
+        <Card className="dashboard-enter dashboard-delay-3 dashboard-glass overflow-hidden rounded-lg border-primary/15">
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <CardTitle className="flex items-center gap-2 text-base">
-              <Sparkles className="h-4 w-4 text-primary" /> Your AI Productivity Briefing
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Sparkles className="h-4 w-4" />
+              </span>
+              Your AI Productivity Briefing
             </CardTitle>
-            <Button variant="outline" size="sm" onClick={runBriefing} disabled={loading}>
-              <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Refresh
+            <Button variant="outline" size="sm" onClick={runBriefing} disabled={loading} className="transition-colors duration-200">
+              <RefreshCw className={`mr-1.5 h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} /> Refresh
             </Button>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -174,8 +187,8 @@ function Dashboard() {
           </CardContent>
         </Card>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card>
+        <div className="dashboard-enter dashboard-delay-4 grid gap-6 lg:grid-cols-2">
+          <Card className="rounded-lg border-border/70 shadow-sm">
             <CardHeader>
               <CardTitle className="text-base">Today&apos;s priorities</CardTitle>
             </CardHeader>
@@ -193,7 +206,7 @@ function Dashboard() {
                 />
               ) : (
                 priorities.map((t) => (
-                  <div key={t.id} className="flex items-start gap-3 rounded-xl border p-3">
+                  <div key={t.id} className="group flex items-start gap-3 rounded-lg border border-transparent bg-muted/35 p-3 transition-colors duration-200 hover:border-border hover:bg-muted/60">
                     <Checkbox
                       checked={t.status === "Complete"}
                       onCheckedChange={(c) =>
@@ -218,7 +231,7 @@ function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="rounded-lg border-border/70 shadow-sm">
             <CardHeader>
               <CardTitle className="text-base">Recent activity</CardTitle>
             </CardHeader>
@@ -231,8 +244,8 @@ function Dashboard() {
                 />
               ) : (
                 activity.slice(0, 6).map((a) => (
-                  <div key={a.id} className="flex items-start gap-3 border-b pb-3 last:border-0 last:pb-0">
-                    <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary" />
+                  <div key={a.id} className="group flex items-start gap-3 border-b pb-3 transition-colors last:border-0 last:pb-0">
+                    <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary ring-4 ring-primary/10 transition-transform duration-200 group-hover:scale-110" />
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium">{a.label}</p>
                       <p className="truncate text-xs text-muted-foreground">{a.detail}</p>

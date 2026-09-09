@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as EmailRouteImport } from './routes/email'
+import { Route as KnowledgeRouteImport } from './routes/knowledge'
 import { Route as MeetingsRouteImport } from './routes/meetings'
 import { Route as ResearchRouteImport } from './routes/research'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as WorkflowRouteImport } from './routes/workflow'
 import { Route as WritingRouteImport } from './routes/writing'
 
 const IndexRoute = IndexRouteImport.update({
@@ -32,6 +35,11 @@ const EmailRoute = EmailRouteImport.update({
   path: '/email',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KnowledgeRoute = KnowledgeRouteImport.update({
+  id: '/knowledge',
+  path: '/knowledge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MeetingsRoute = MeetingsRouteImport.update({
   id: '/meetings',
   path: '/meetings',
@@ -42,9 +50,19 @@ const ResearchRoute = ResearchRouteImport.update({
   path: '/research',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkflowRoute = WorkflowRouteImport.update({
+  id: '/workflow',
+  path: '/workflow',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WritingRoute = WritingRouteImport.update({
@@ -57,18 +75,24 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
+  '/knowledge': typeof KnowledgeRoute
   '/meetings': typeof MeetingsRoute
   '/research': typeof ResearchRoute
+  '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
+  '/workflow': typeof WorkflowRoute
   '/writing': typeof WritingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
+  '/knowledge': typeof KnowledgeRoute
   '/meetings': typeof MeetingsRoute
   '/research': typeof ResearchRoute
+  '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
+  '/workflow': typeof WorkflowRoute
   '/writing': typeof WritingRoute
 }
 export interface FileRoutesById {
@@ -76,26 +100,50 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
+  '/knowledge': typeof KnowledgeRoute
   '/meetings': typeof MeetingsRoute
   '/research': typeof ResearchRoute
+  '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
+  '/workflow': typeof WorkflowRoute
   '/writing': typeof WritingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/chat' | '/email' | '/meetings' | '/research' | '/tasks' | '/writing'
+    | '/'
+    | '/chat'
+    | '/email'
+    | '/knowledge'
+    | '/meetings'
+    | '/research'
+    | '/settings'
+    | '/tasks'
+    | '/workflow'
+    | '/writing'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/chat' | '/email' | '/meetings' | '/research' | '/tasks' | '/writing'
+    | '/'
+    | '/chat'
+    | '/email'
+    | '/knowledge'
+    | '/meetings'
+    | '/research'
+    | '/settings'
+    | '/tasks'
+    | '/workflow'
+    | '/writing'
   id:
     | '__root__'
     | '/'
     | '/chat'
     | '/email'
+    | '/knowledge'
     | '/meetings'
     | '/research'
+    | '/settings'
     | '/tasks'
+    | '/workflow'
     | '/writing'
   fileRoutesById: FileRoutesById
 }
@@ -103,9 +151,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChatRoute: typeof ChatRoute
   EmailRoute: typeof EmailRoute
+  KnowledgeRoute: typeof KnowledgeRoute
   MeetingsRoute: typeof MeetingsRoute
   ResearchRoute: typeof ResearchRoute
+  SettingsRoute: typeof SettingsRoute
   TasksRoute: typeof TasksRoute
+  WorkflowRoute: typeof WorkflowRoute
   WritingRoute: typeof WritingRoute
 }
 
@@ -132,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmailRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/knowledge': {
+      id: '/knowledge'
+      path: '/knowledge'
+      fullPath: '/knowledge'
+      preLoaderRoute: typeof KnowledgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/meetings': {
       id: '/meetings'
       path: '/meetings'
@@ -146,11 +204,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tasks': {
       id: '/tasks'
       path: '/tasks'
       fullPath: '/tasks'
       preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workflow': {
+      id: '/workflow'
+      path: '/workflow'
+      fullPath: '/workflow'
+      preLoaderRoute: typeof WorkflowRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/writing': {
@@ -167,9 +239,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChatRoute: ChatRoute,
   EmailRoute: EmailRoute,
+  KnowledgeRoute: KnowledgeRoute,
   MeetingsRoute: MeetingsRoute,
   ResearchRoute: ResearchRoute,
+  SettingsRoute: SettingsRoute,
   TasksRoute: TasksRoute,
+  WorkflowRoute: WorkflowRoute,
   WritingRoute: WritingRoute,
 }
 export const routeTree = rootRouteImport

@@ -89,7 +89,15 @@ function KnowledgePage() {
   }, [saved, query, category]);
 
   const counts = useMemo(() => {
-    const map: Record<SavedCategory | "All", number> = { All: saved.length };
+    const map: Record<SavedCategory | "All", number> = {
+      All: saved.length,
+      Emails: 0,
+      "Meeting Summaries": 0,
+      Tasks: 0,
+      Research: 0,
+      Documents: 0,
+      "Saved Conversations": 0,
+    };
     for (const c of CATEGORIES) map[c] = saved.filter((s) => s.category === c).length;
     return map;
   }, [saved]);

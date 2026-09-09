@@ -53,8 +53,9 @@ export function sectionFrom(markdown: string, heading: string) {
   if (idx === -1) return "";
   const out: string[] = [];
   for (let i = idx + 1; i < lines.length; i++) {
-    if (/^#{1,3}\s/.test(lines[i])) break;
-    out.push(lines[i]);
+    const line = lines[i] ?? "";
+    if (/^#{1,3}\s/.test(line)) break;
+    out.push(line);
   }
   return out.join("\n").trim();
 }

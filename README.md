@@ -1,4 +1,4 @@
-# Remix of WorkFlow AI
+# WorkFlow AI
 
 Build a complete, modern, responsive web application called WorkFlow AI – AI-Powered Workplace Productivity Assistant.
 
